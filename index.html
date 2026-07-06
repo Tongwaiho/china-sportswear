@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sportswear in China 2019–2025 · Field Guide</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#16161a; --muted:#6b7280; --line:#e5e7eb; --bg:#fafaf8; --card:#ffffff;
+    --nike:#16161a; --adidas:#1a56db; --anta:#c81e1e; --antab:#e05252; --fila:#7e3af2; --lining:#d97706;
+    --rep:#0e7a4d; --repbg:#e6f4ee; --est:#b45309; --estbg:#fdf0dd; --ana:#6d28d9; --anabg:#f0e9fd;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC",sans-serif; color:var(--ink); background:var(--bg); line-height:1.55; font-size:15px;}
+  .wrap{max-width:1060px; margin:0 auto; padding:0 24px;}
+  header.hero{padding:64px 0 36px; border-bottom:1px solid var(--line); background:var(--card);}
+  .kicker{font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:14px;}
+  h1{font-size:40px; line-height:1.12; letter-spacing:-.01em; font-weight:800; max-width:820px;}
+  .hero p.sub{margin-top:16px; max-width:720px; color:var(--muted); font-size:16px;}
+  .legend-badges{margin-top:20px; display:flex; gap:8px; flex-wrap:wrap; align-items:center; font-size:12px;}
+  .badge{display:inline-block; padding:2px 9px; border-radius:99px; font-weight:600; font-size:11px; letter-spacing:.03em;}
+  .b-rep{background:var(--repbg); color:var(--rep);}
+  .b-est{background:var(--estbg); color:var(--est);}
+  .b-ana{background:var(--anabg); color:var(--ana);}
+  nav{position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex; gap:4px; overflow-x:auto; padding:0 24px;}
+  nav a{padding:12px 12px; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent;}
+  nav a:hover{color:var(--ink); border-color:var(--line);}
+  section{padding:56px 0 8px;}
+  .snum{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); font-weight:700; margin-bottom:8px;}
+  h2{font-size:28px; letter-spacing:-.01em; margin-bottom:10px; font-weight:800;}
+  .lede{color:var(--muted); max-width:760px; margin-bottom:26px; font-size:15.5px;}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 20px 18px;}
+  .card .big{font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1.1;}
+  .card h3{font-size:15px; margin:8px 0 6px; font-weight:700;}
+  .card p{font-size:13.5px; color:var(--muted);}
+  .panel{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:22px; margin-bottom:16px;}
+  .chart-box{position:relative; height:380px;}
+  .chart-box.short{height:300px;}
+  .toggle{display:inline-flex; border:1px solid var(--line); border-radius:9px; overflow:hidden; margin-bottom:14px;}
+  .toggle button{border:0; background:transparent; padding:7px 16px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer;}
+  .toggle button.on{background:var(--ink); color:#fff;}
+  .chips{display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 0;}
+  .chip{border:1px solid var(--line); background:var(--card); border-radius:99px; padding:6px 14px; font-size:12.5px; font-weight:600; cursor:pointer; color:var(--ink); transition:all .15s;}
+  .chip:hover{border-color:var(--ink);}
+  .chip.on{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .event-detail{display:none; margin-top:14px; border-left:3px solid var(--ink); background:var(--card); border-radius:0 12px 12px 0; border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:18px 20px;}
+  .event-detail.show{display:block;}
+  .event-detail h4{font-size:16px; margin-bottom:8px;}
+  .event-detail .row{margin-bottom:10px; font-size:14px;}
+  .event-detail .row b.tag{font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; margin-right:6px;}
+  .tag-fact{color:var(--rep);} .tag-ana{color:var(--ana);}
+  .srcs{font-size:12px; color:var(--muted); margin-top:8px;}
+  .srcs a{color:var(--muted);}
+  a{color:#1d4ed8; text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .note{font-size:12.5px; color:var(--muted); margin-top:12px; border-top:1px dashed var(--line); padding-top:10px;}
+  .callout{border-left:3px solid var(--anta); background:var(--card); border-radius:0 12px 12px 0; border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:16px 20px; margin:16px 0; font-size:14.5px;}
+  .quote{border-left:3px solid var(--ana); background:var(--anabg); border-radius:0 12px 12px 0; padding:16px 20px; margin:16px 0; font-size:14.5px;}
+  .quote .zh{color:var(--muted); font-size:13px; margin-top:8px;}
+  /* channel bars */
+  .cbar-row{margin-bottom:22px;}
+  .cbar-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
+  .cbar-head .nm{font-weight:700; font-size:14.5px;}
+  .cbar-head .meta{font-size:12px; color:var(--muted);}
+  .cbar{display:flex; height:38px; border-radius:8px; overflow:hidden; font-size:12px; color:#fff; font-weight:600;}
+  .cbar div{display:flex; align-items:center; justify-content:center; min-width:0; white-space:nowrap; overflow:hidden;}
+  .cbar .seg-note{color:#fff9;}
+  .cbar-legend{font-size:12px; color:var(--muted); margin-top:6px;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; background:var(--card);}
+  th,td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+  th{background:#f4f4f1; font-size:12.5px; text-transform:uppercase; letter-spacing:.04em;}
+  td.term{font-weight:700; white-space:nowrap;}
+  details{background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:12px;}
+  details summary{cursor:pointer; padding:18px 20px; font-weight:700; font-size:16px; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+  details summary::after{content:"+"; font-size:20px; color:var(--muted); font-weight:400;}
+  details[open] summary::after{content:"–";}
+  details .body{padding:0 20px 20px; font-size:14.5px;}
+  details .body p{margin-bottom:10px;}
+  details .body ul{margin:0 0 10px 18px;}
+  details .body li{margin-bottom:8px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;} h1{font-size:30px;}}
+  .dtc-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:14px; margin-bottom:18px;}
+  .dtc-card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px;}
+  .dtc-card h4{font-size:15px; margin:6px 0 8px;}
+  .dtc-card .where{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:700;}
+  .dtc-card p{font-size:13.5px; color:var(--muted);}
+  footer{margin-top:64px; padding:28px 0 48px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted);}
+  .src-group{margin-bottom:16px;}
+  .src-group h4{font-size:13.5px; margin-bottom:6px;}
+  .src-group ul{margin-left:18px; font-size:12.5px; color:var(--muted);}
+  .src-group li{margin-bottom:3px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">IDEO Shanghai · Field Notes · July 2026</div>
+    <h1>Sportswear in China, 2019–2025: what the numbers actually say</h1>
+    <p class="sub">Four brands — Nike, Adidas, Anta, Li-Ning — through China revenue, store footprints, and channel structure. Every figure is tagged by evidence level and linked to its source, so you can vet anything before you repeat it in a room.</p>
+    <div class="legend-badges">
+      <span class="badge b-rep">REPORTED</span><span style="color:var(--muted)">from filings / results announcements</span>
+      <span class="badge b-est">ESTIMATE</span><span style="color:var(--muted)">derived or analyst estimate</span>
+      <span class="badge b-ana">ANALYST VIEW</span><span style="color:var(--muted)">interpretation, not fact</span>
+    </div>
+  </div>
+</header>
+
+<nav><div class="wrap">
+  <a href="#headlines">Headlines</a>
+  <a href="#revenue">Revenue race</a>
+  <a href="#stores">Store footprint</a>
+  <a href="#channels">Channel mix</a>
+  <a href="#dtc">DTC decoder</a>
+  <a href="#dives">Deep dives</a>
+  <a href="#sources">Sources</a>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ================= HEADLINES ================= -->
+<section id="headlines">
+  <div class="snum">01 · Five things to know before any China conversation</div>
+  <h2>The 30-second version</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="big">$11.3B vs $6.6B</div>
+      <h3>Anta Group passed Nike China in 2022 — and the gap is now huge</h3>
+      <p>Anta Group 2025 revenue ≈US$11.3B (¥80.2B, +13.3%) vs Nike Greater China US$6.59B (FY25, −13%, native currency). But at <em>brand</em> level Nike is still China's #1 single brand (16.2% share, Euromonitor 2024). Both statements are true — which one you cite changes the story. <span class="badge b-rep">REPORTED</span></p>
+    </div>
+    <div class="card">
+      <div class="big">国潮 ≠ answer</div>
+      <h3>"Guochao" explains almost nothing about who won</h3>
+      <p>Its biggest supposed beneficiary, Li-Ning, was the domestic loser of 2022–24. The foreign brand that recovered, Adidas, did so partly by executing localization <em>better</em> than Li-Ning sustained it. The durable variables: channel control, inventory cycles, portfolio structure. <span class="badge b-ana">ANALYST VIEW</span></p>
+    </div>
+    <div class="card">
+      <div class="big">8,343 → 5,020</div>
+      <h3>Nike's paid-for reach in China is down ~40%</h3>
+      <p>Topsports (滔搏), Nike's biggest China partner, cut its store fleet ~40% between FY2019 and FY2025 — and now also sells HOKA and Li-Ning. Nike's "wholesale problem" in China is really a partner-economics problem Nike created itself. <span class="badge b-rep">REPORTED</span></p>
+    </div>
+    <div class="card">
+      <div class="big">26.3%</div>
+      <h3>China is now Adidas's most profitable region on earth</h3>
+      <p>Greater China operating margin 26.3% (2025) vs 10.1% in North America — built on full-price discipline, a 45-day local product cycle, and real P&amp;L autonomy for the China team. This is the playbook Nike announced only in 2025–26. <span class="badge b-rep">REPORTED</span></p>
+    </div>
+    <div class="card">
+      <div class="big">Same words,<br>different market</div>
+      <h3>"Wholesale" and "DTC" don't mean what they mean in the US</h3>
+      <p>China wholesale = mono-brand partner stores (Topsports, Pou Sheng), not Foot Locker. China DTC includes brand-run Tmall/Douyin flagships. Misreading these two words is the fastest way to sound naive. See the <a href="#dtc">DTC decoder</a>. <span class="badge b-ana">ANALYST VIEW</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REVENUE ================= -->
+<section id="revenue">
+  <div class="snum">02 · China revenue, 2019–2025</div>
+  <h2>The revenue race — and what turned each curve</h2>
+  <p class="lede">All series shown in US$ billions. Nike is already reported in USD; Adidas (EUR) and Anta/Li-Ning (RMB) are converted using IRS/ECB annual-average exchange rates (tooltips show the original reported figures too). Nike is plotted by fiscal year ending May of the labeled year; the 2026 point is Nike FY26 only. Click an event chip to see what actually happened at each turn.</p>
+  <div class="panel">
+    <div class="toggle" id="revToggle">
+      <button class="on" data-view="group">Group view</button>
+      <button data-view="brand">Brand view (Anta brand vs Group)</button>
+    </div>
+    <div class="chart-box"><canvas id="revChart"></canvas></div>
+    <div class="note">Group view compares each company's total China business: Anta Group includes FILA, Descente, Kolon etc. (Amer Sports / Arc'teryx is <em>not</em> consolidated). Brand view adds Anta's main brand alongside its own Group total, so you can see single-brand momentum against Nike, Adidas and Li-Ning directly. Nike figures are native USD, no conversion. Adidas (EUR) and Anta/Li-Ning (RMB) are converted to USD using IRS/ECB annual-average exchange rates — a standard convention, not a derived estimate; underlying revenue figures are <span class="badge b-rep">REPORTED</span>. Adidas's Greater China segment did not exist as a reported line before 2020, so no 2019 figure is shown.</div>
+    <div class="chips" id="eventChips"></div>
+    <div class="event-detail" id="eventDetail"></div>
+  </div>
+</section>
+
+<!-- ================= STORES ================= -->
+<section id="stores">
+  <div class="snum">03 · Offline footprint, 2019–2025</div>
+  <h2>Store counts: the quiet story is Nike's shrinking reach</h2>
+  <p class="lede">These series count different things — read the legend carefully. Anta and Li-Ning report their own store networks. Nike and Adidas don't disclose China store counts, so their partners' fleets are the best proxy for offline reach.</p>
+  <div class="panel">
+    <div class="chart-box"><canvas id="storeChart"></canvas></div>
+    <div class="note">
+      Anta = Anta-brand stores incl. Kids (FILA shown separately; both <span class="badge b-rep">REPORTED</span>).
+      Li-Ning = total POS incl. LI-NING YOUNG <span class="badge b-rep">REPORTED</span>.
+      Topsports &amp; Pou Sheng = directly-operated stores of Nike/Adidas's two dominant China partners (Nike+Adidas ≈ 86–90% of their revenue); Topsports FY ends February of the following year <span class="badge b-rep">REPORTED</span>.
+      Adidas = total doors incl. franchise, two anchor points only (~12,000 in 2019/20 → ~7,500 in Sept 2024, exec statements) <span class="badge b-est">ESTIMATE</span>.
+      Nike-owned China stores were never disclosed; likely low hundreds, plus a 100-door owned-store pilot announced FY26 <span class="badge b-est">ESTIMATE</span>.
+    </div>
+    <div class="callout">
+      <b>How to read this:</b> domestic brands kept ~7,600–12,000 doors roughly stable while the two partners who physically carry Nike and Adidas closed ~5,900 stores between them (Topsports −40%, Pou Sheng −44%, FY2019–FY2025). International brands' offline distribution in China is contracting every year, concentrated in the tier-2/3/4 cities where domestic brands are strongest. Meanwhile Topsports hedged by adding HOKA, Li-Ning and Asics to its portfolio.
+      <div class="srcs">Sources: <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2022/0530/2022053001251.pdf">Topsports AR FY22 (HKEX)</a> · <a href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0527/2026052701005.pdf">Topsports FY26 results (HKEX)</a> · <a href="https://investor.yueyuen.com/YY_2025_Annual_EN.pdf">Yue Yuen / Pou Sheng AR 2025</a> · <a href="https://www.jiemian.com/article/11859122.html">界面新闻 on Topsports diversification</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHANNELS ================= -->
+<section id="channels">
+  <div class="snum">04 · Revenue by channel</div>
+  <h2>Channel mix: what's disclosed, what isn't, and why the 2×2 doesn't exist</h2>
+  <p class="lede">The intuitive grid — offline DTC / online DTC / offline wholesale / online wholesale — cannot be filled from disclosures. Brands report three buckets, not four, and each company cuts them differently. That mismatch is itself an insight: <b>online wholesale is real but invisible</b> — distributor-run Nike stores on Tmall/Douyin sit inside "wholesale" and are never broken out.</p>
+  <div class="panel">
+
+    <div class="cbar-row">
+      <div class="cbar-head"><span class="nm">Nike Greater China — FY25 <span class="badge b-rep">REPORTED</span></span><span class="meta">10-K revenue disaggregation, US$6.59B total</span></div>
+      <div class="cbar">
+        <div style="width:43.8%; background:var(--nike);">NIKE Direct 43.8%</div>
+        <div style="width:56.2%; background:#9ca3af;">Wholesale 56.2%</div>
+      </div>
+      <div class="cbar-legend">Direct = owned stores + digital (incl. Nike-run Tmall/Douyin/WeChat flagships). Wholesale = mostly mono-brand partner stores (Topsports, Pou Sheng) — <em>not</em> multi-brand retail. DTC share peaked at 46.7% in FY23, then Nike deliberately rebuilt wholesale. No online/offline split disclosed inside either bucket.</div>
+    </div>
+
+    <div class="cbar-row">
+      <div class="cbar-head"><span class="nm">Anta main brand — 2024 <span class="badge b-rep">REPORTED</span></span><span class="meta">≈US$4.66B (¥33.5B) total; 2025 split not yet press-quoted</span></div>
+      <div class="cbar">
+        <div style="width:35.8%; background:var(--anta);">DTC – self-run ~35.8% (est.)</div>
+        <div style="width:18.6%; background:repeating-linear-gradient(45deg,#e05252,#e05252 7px,#ef8a8a 7px,#ef8a8a 14px);">DTC – franchisee-run ~18.6% (est.)</div>
+        <div style="width:35.8%; background:#f0a5a5; color:#7a1a1a;">E-commerce 35.8%</div>
+        <div style="width:9.8%; background:#9ca3af;">Wholesale 9.8%</div>
+      </div>
+      <div class="cbar-legend"><b>Your instinct is right — the "DTC" bucket isn't pure self-operated retail.</b> Anta's own annual reports describe stores under its "DTC model" as a hybrid: only ~44% (2022/23 disclosure) are directly staffed by Anta, the rest are franchisee-operated under Anta's standards. The reported 54.4% DTC total (¥18.2B) is split here into self-run vs franchisee-run using a ratio drawn from 2025 brand-level reporting (CBNData: ~35.4% self-operated / ~18.4% franchise of total revenue) applied back to the 2024 total — directionally solid, not an exact year-matched figure, since Anta doesn't disclose this split itself. E-commerce is reported as its own line; classic non-"DTC" wholesale is a rump ~10%, down from ~58% in 2020. <span class="badge b-est">ESTIMATE</span></div>
+    </div>
+
+    <div class="cbar-row">
+      <div class="cbar-head"><span class="nm">Li-Ning — 2025 <span class="badge b-rep">REPORTED</span></span><span class="meta">≈US$4.15B (¥29.6B) total, results announcement</span></div>
+      <div class="cbar">
+        <div style="width:46.6%; background:var(--lining);">Franchise / wholesale 46.6%</div>
+        <div style="width:22.5%; background:#f3cd8a; color:#7a5106;">Direct retail 22.5%</div>
+        <div style="width:29.5%; background:#fbe7c4; color:#7a5106;">E-commerce 29.5%</div>
+        <div style="width:1.4%; background:#9ca3af;" class="seg-note">1.4%</div>
+      </div>
+      <div class="cbar-legend">Li-Ning is the wholesale-heaviest domestic player — a structure analysts blame for its 2022–24 discount chaos (see <a href="#dives">deep dives</a>). Direct retail actually <em>shrank</em> in 2024–25 (closed 201 direct stores in 2024). Last segment = international.</div>
+    </div>
+
+    <div class="cbar-row">
+      <div class="cbar-head"><span class="nm">Adidas Greater China <span class="badge b-est">NOT DISCLOSED</span></span><span class="meta">≈US$4.09B (€3.62B) total 2025</span></div>
+      <div class="cbar">
+        <div style="width:100%; background:repeating-linear-gradient(45deg,#dbe3f5,#dbe3f5 10px,#eef1f8 10px,#eef1f8 20px); color:#4b5563;">No China channel split disclosed — global DTC ≈40%; ~96% of China doors were partner-operated (2020)</div>
+      </div>
+      <div class="cbar-legend">Gulden abandoned the "50% DTC by 2025" target: <i>"this is a wholesale-driven business."</i> Adidas China runs on the same partner structure as Nike (Topsports, Pou Sheng, plus a Hailan Home tier-3/5 partnership).</div>
+    </div>
+
+    <div class="callout">
+      <b>Live tension worth flagging to the team:</b> Nike is reportedly cutting off distributors' <em>online</em> sales (the invisible "online wholesale" cell) from Jan 2027 — Topsports formally clarified that online Nike sales were ~22% of its FY26 revenue. BNP Paribas: <i>"We don't think Nike has a distributor problem but rather a product problem"</i> — warning the cutoff would repeat the Western DTC-pivot error that "opened up shelf space for competitors." <span class="badge b-ana">ANALYST VIEW</span>
+      <div class="srcs">Sources: <a href="https://frontofficesports.com/why-nikes-rumored-china-e-commerce-gamble-could-be-a-misstep/">Front Office Sports, Jun 2026</a> · <a href="https://www.topsports.com.cn/media/hk-news/20260625/assets/12214722-0.pdf">Topsports HKEX clarification, Jun 25 2026</a> · <a href="https://www.sec.gov/Archives/edgar/data/320187/000032018725000047/R75.htm">Nike 10-K FY25 segment data</a> · <a href="https://www.nbd.com.cn/articles/2024-03-26/3297635.html">每日经济新闻 Anta channel split</a> · <a href="https://doc.irasia.com/listco/hk/lining/announcement/a332504-ew_02331ann_19032026.pdf">Li-Ning FY2025 announcement</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DTC DECODER ================= -->
+<section id="dtc">
+  <div class="snum">05 · The word that will trip you up</div>
+  <h2>DTC decoder: three different things wear the same name</h2>
+  <p class="lede">In the US, "DTC" has one meaning. In China it has at least three — and a sell-side research house will use it differently from Nike's own 10-K. Get this wrong and every channel conversation that follows is built on sand.</p>
+
+  <div class="dtc-cards">
+    <div class="dtc-card">
+      <div class="where">US / Nike accounting</div>
+      <h4>DTC = brand.com + brand-owned stores</h4>
+      <p>Nike Direct in the 10-K: NIKE-owned retail plus digital platforms. In China this <em>includes</em> Nike-operated Tmall/JD/Douyin flagships and the WeChat mini-program — Nike is merchant of record on those marketplaces. Partner-run mono-brand stores are booked as <b>wholesale</b>. <span class="badge b-rep">REPORTED</span></p>
+    </div>
+    <div class="dtc-card">
+      <div class="where">China / consumer-facing reality</div>
+      <h4>"DTC-style" retail executed by partners</h4>
+      <p>What shoppers experience as a "Nike store" in most Chinese cities is owned and staffed by Topsports or Pou Sheng under Nike's format rules. The DTC <em>experience</em> is delivered through wholesale <em>economics</em>. Brands directly run only concept stores (House of Innovation, Nike Style, Rise) and factory outlets. <span class="badge b-ana">ANALYST VIEW</span></p>
+    </div>
+    <div class="dtc-card">
+      <div class="where">Anta's version</div>
+      <h4>DTC = buying back <em>some</em> franchisees — not all of them</h4>
+      <p>Aug 2020: Anta terminated 11 regional distributors covering ~3,500 stores (~35% of its fleet, ~¥2.0B — mostly inventory buyback), converting ~60% of those specific stores to direct operation. But group-wide, Anta's own annual reports say only ~44% of stores under its "DTC model" are directly staffed by Anta — the rest remain franchisee-run under Anta's standards. "DTC" here means centrally controlled, not necessarily self-operated. Gross margin still rose ~41% → ~52% in two years. <span class="badge b-rep">REPORTED</span></p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div style="font-weight:700; margin-bottom:10px;">Nike Greater China: NIKE Direct share of revenue (10-K, reported)</div>
+    <div class="chart-box short"><canvas id="dtcChart"></canvas></div>
+    <div class="note">The plateau is the point: GC Direct share peaked FY23 at 46.7% and Nike has since <em>rebuilt</em> wholesale (FY24–25 ~43–44%). Changjiang Securities notes Adidas's CEO called 35–40% DTC "the right level" for retailer relationships, and Nike re-embraced Foot Locker / DSW / Macy's from 2023 to clear inventory. The global DTC-maximalist era is over — in both markets. <span class="badge b-ana">ANALYST VIEW</span></div>
+  </div>
+
+  <div class="quote">
+    <b>The sell-side view (长江证券, Topsports initiation, May 2024):</b> "Unlike Europe and the US — where retailers are mainly multi-brand chains and brands' DTC means own stores and official sites — in China, retailers like Topsports and Pou Sheng open <b>mono-brand stores</b> for international brands, which themselves run only a few concept and factory stores. So in China, international brands' DTC strategy is in practice <b>executed through these retailers</b> — making quality distributors like Topsports irreplaceable."
+    <div class="zh">原文: "不同于欧美市场，国内市场主要为滔搏、宝胜等零售商开设海外品牌单品牌店为主……因而国内市场DTC主要通过滔搏与宝胜等零售商贯彻执行，因而滔搏此类优质经销商未来仍不可替代。" — 于旭辉、柯睿，长江证券《滔滔逐潮往，搏浪奋辑行》2024-05-21 <span class="badge b-ana">ANALYST VIEW</span></div>
+  </div>
+
+  <div class="callout">
+    <b>How that claim has aged (two years on):</b> half vindicated, half challenged. Vindicated: Elliott Hill is rebuilding wholesale relationships, and nobody built a direct fleet to replace the partners — sinking-market retail is exactly the heavy-asset, low-margin work global brands can't do in China. Challenged: "irreplaceable" didn't mean "protected" — Topsports has since shrunk further to 4,360 doors (FY2026, latest reported), profit fell ~42%, it diversified into HOKA/Li-Ning/Asics, and Nike is reportedly cutting its online sales rights from 2027. The partner layer is irreplaceable <em>as infrastructure</em> but no longer safe <em>as a business</em>. That distinction matters for anyone designing Nike's China retail future.
+    <div class="srcs">Sources: <a href="https://www.sec.gov/Archives/edgar/data/320187/000032018719000051/nke-531201910k.htm">Nike 10-K (NIKE Direct definition)</a> · <a href="https://www.rev.com/transcripts/nike-inc-nke-q1-fy21-earnings-call-transcript">Nike Q1 FY21 call (Tmall inside Nike Digital)</a> · <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2020/0825/2020082500413.pdf">Anta HKEX announcement, Aug 25 2020</a> · <a href="https://news.futunn.com/en/post/59589010/weekend-reading-anta-s-high-margin-strategy-unreplicable-by-other">Futu: Anta margin mechanics</a> · <a href="https://www.retaildive.com/news/nike-names-ceo-elliott-hill-john-donahoe-retires/727588/">Retail Dive: Hill appointment</a> · 长江证券报告 (user-provided PDF, research.95579.com)</div>
+  </div>
+</section>
+
+<!-- ================= DEEP DIVES ================= -->
+<section id="dives">
+  <div class="snum">06 · Same wave, different fates</div>
+  <h2>Four mechanisms behind the tipping points</h2>
+  <p class="lede">Each shock hit all four brands. Who bled and who gained was decided by channel structure, inventory position, and price-brand fit — not by sentiment. These are the stories behind the markers on the revenue chart, with analyst reasoning separated from fact.</p>
+
+  <details>
+    <summary>Guochao didn't pick the winners — channel and pricing did</summary>
+    <div class="body">
+      <p><b class="tag-fact">FACT</b> Li-Ning was guochao's flagship: 中国李宁 streetwear, +56.1% revenue in 2021. Yet 2022–24 it became the domestic laggard: 2024 revenue +3.9% with net profit −5.5%, the weakest of China's big four; brokers cut profit forecasts ~25%.</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> 壹览商业's autopsy: "what supported Li-Ning's price hikes was guochao sentiment, not R&amp;D" — LI-NING 1990 coats reached ¥4,599, near Nike/Adidas territory, without the brand power to hold it. The 中国李宁 line pushed the company into a hit-driven fashion arena it wasn't built for, while Anta competed through a <em>portfolio</em> of separately positioned brands.</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> The channel made it worse: with ~48% of revenue in wholesale, cash-strapped distributors dumped inventory online at uncontrolled discounts while Li-Ning simultaneously ran premium marketing — 派财经 calls it the "raise prices upstairs, fire-sale downstairs" loop (一边涨价搞品牌、一边打折清库存). Anta HQ decisions reach direct stores same-day; Li-Ning's take days through franchisees, if they comply at all.</p>
+      <p><b class="tag-fact">FACT</b> Oct 2022's 逐梦行 jacket controversy (−15% stock in a week) showed guochao equity is reversible — but the margin decay predates it by three quarters. Meanwhile the foreign "guochao winner" was… Adidas: 新浪's 2025 recovery piece is literally titled "阿迪达斯翻身，靠的竟然是'国潮'".</p>
+      <div class="srcs">Sources: <a href="https://www.yilantop.com/article/19988">壹览商业</a> · <a href="https://www.cbndata.com/information/240386">CBNData: 中国李宁救不了李宁</a> · <a href="http://www.paicaijing314.com/news/1360411.html">派财经</a> · <a href="https://www.headscm.com/Fingertip/detail/id/48113.html">物流指闻: DTC地基效应</a> · <a href="https://research.zhiweidata.com/2022/10/25/12113/">知微数据: 逐梦行舆情</a> · <a href="https://finance.sina.com.cn/jjxw/2025-03-21/doc-ineqmfqh3849178.shtml">新浪财经</a> · <a href="https://www.stcn.com/article/detail/1618203.html">证券时报</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Nike's decline is substantially self-inflicted — Xinjiang was the trigger, not the cause</summary>
+    <div class="body">
+      <p><b class="tag-fact">FACT</b> Nike GC peaked FY21 ($8.29B), then fell in five of six years to $5.85B (FY26). Domestic brands <em>grew</em> through the same lockdown quarters — the demand didn't vanish, it moved (The China Project ran the numbers in 2022).</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> Mechanism 1 — classic-franchise overdraft: AF1/Dunk/AJ1 were over-supplied to hit quarterly targets; when the sneaker-flipping wave broke, they became the inventory pile. The 得物 resale bubble Nike's scarcity marketing created then collapsed — Panda Dunk went from ~¥2,000 resale to below its ¥699 retail. Discounting to clear it eroded exactly the premium image the model depended on: the 折扣→毛利→品牌力→库存 doom loop.</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> Mechanism 2 — CDA gutted partner economics: Donahoe's Consumer Direct Acceleration deliberately downgraded distributors; Topsports shrank from 8,343 (FY19) to 5,020 doors (FY25), a ~40% cut, and now distributes HOKA and Li-Ning. 界面新闻's verdict: "DTC isn't the original sin — losing product innovation is" (DTC不是原罪，产品失去创新才是根本).</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> Mechanism 3 — carved up by specialists, not beaten by one rival: runners to HOKA/On/特步, hikers to Arc'teryx/Salomon (both Anta-affiliated), fashion back to Adidas Samba. Nike merchandised by gender while the market shifted to scenario/function.</p>
+      <p><b class="tag-fact">FACT</b> Elliott Hill's own words: <i>"We have become a casual lifestyle brand competing on price in China."</i> The fix announced: China-designed, China-made product by holiday 2027, inventory pulled down (GC units −20%+ in Q3 FY26), 100 owned-store pilot, margin over volume. The effect so far is mixed: Q3 FY26 GC EBIT rose 11% on that discipline — but the <em>full</em> fiscal year still closed down 20% in GC operating income ($1.60B → $1.28B), because revenue fell faster than costs came out. The reset is a multi-year bet, not a fixed quarter.</p>
+      <div class="srcs">Sources: <a href="https://thechinaproject.com/2022/08/19/nike-and-adidas-are-blaming-covid-for-low-china-sales-but-the-numbers-dont-add-up/">The China Project</a> · <a href="https://www.cbndata.com/information/247644">CBNData: Dunk 泡沫</a> · <a href="https://www.huxiu.com/article/4864825.html">虎嗅</a> · <a href="https://www.jiemian.com/article/11859122.html">界面新闻</a> · <a href="https://pdf.dfcfw.com/pdf/H3_AP202503051644083310_1.pdf">华福证券: 复盘Nike DTC</a> · <a href="https://finance.sina.com.cn/tech/roll/2026-07-01/doc-inifinus2895584.shtml">新浪科技</a> · <a href="https://www.fool.com/earnings/call-transcripts/2026/04/01/nike-nke-q3-2026-earnings-call-transcript/">Nike Q3 FY26 call</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Anta's rise = an inventory machine plus a portfolio machine (and both now face stress)</summary>
+    <div class="body">
+      <p><b class="tag-fact">FACT</b> The 2020 DTC buyback (3,500 stores, 11 regions) was framed by 光大证券 at the time as securing demand-feedback speed and inventory reallocation — FILA's 2009–12 full-direct conversion was the template (store turns 0.8→1.5×/yr, inventory days 180→90). Anta brand gross margin: ~41% (2019) → ~52% (2021).</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> When FILA stalled (−1.4% in 2022, its first decline), the group replaced the engine on schedule: 妙投/虎嗅 call the real capability "批量造FILA" — a repeatable brand-operating system. 2025: outdoor brands +59.2%; Descente past ¥10B retail sales; Kolon ~+70%; Jack Wolfskin acquired to fill the mass-price outdoor band; Arc'teryx (via non-consolidated Amer) past $2B alone. "Anta rising" in 2025 really means "Descente/Kolon/Arc'teryx rising."</p>
+      <p><b class="tag-fact">FACT</b> The watchouts are structural, not cyclical: main Anta brand +3.7% (2025) and losing share of group; group inventory days at 137, stock +13% to ¥12.2B. DTC means Anta now <em>owns</em> the inventory risk it used to push onto distributors — the machine that made it also concentrates the exposure.</p>
+      <div class="srcs">Sources: <a href="https://img3.gelonghui.com/pdf/3a413-87aab799-8d39-44f2-b2e8-c931f0c0dac5.pdf">光大证券研报 (2020)</a> · <a href="https://pro.huxiu.com/article/1178577.html">妙投/虎嗅 7千字解析</a> · <a href="https://ir.anta.com/en/news_detail.php?id=160710">Anta FY2025 results (IR)</a> · <a href="https://www.huxiu.com/article/4846083.html">虎嗅 2025年报</a> · <a href="https://m.chinaventure.com.cn/news/80-20260123-389904.html">投中网: 主品牌掉队</a> · <a href="https://www.guancha.cn/economy/2025_06_05_778334.shtml">观察者网: 狼爪</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Adidas fell harder than Nike — then wrote the localization playbook Nike is now copying</summary>
+    <div class="body">
+      <p><b class="tag-fact">FACT</b> 2022: GC revenue −36% currency-neutral, far deeper than Nike's −9%. CEO Rorsted's exit admission: <i>"We don't understand consumers well enough, so we left room for Chinese competitors who are better off."</i> Weeks later he was gone; Yeezy termination then removed a major profit pool.</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> Why deeper: one global product line with zero China-specific product, heavier physical/wholesale exposure, weaker e-commerce, and a fashion-skewed mix (Yeezy/Superstar hype) most vulnerable to taste shifts.</p>
+      <p><b class="tag-fact">FACT</b> The recovery mechanics under Gulden: 2023 inventory clean-out first; then full-price discipline in a promotional market; China P&amp;L and product autonomy under Adrian Siu (萧家乐) — idea-to-shelf in 45 days vs the old 9-month global review, "created in China" >80% of range; Samba/T-toe wave (+20× in 2023, ~€1.5B in 2024) as the product cycle on top. Result: 10+ consecutive growth quarters and a 26.3% GC operating margin — the highest of any Adidas region (North America: 10.1%).</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> The caveat analysts flag: the retro wave is cooling (界面: "除了Samba，凭什么?") — the recovery must hand off from fashion to running/performance to hold. And note the uncomfortable symmetry: Adidas recovered by doing guochao-style localization with discipline; that was supposed to be Li-Ning's home turf.</p>
+      <div class="srcs">Sources: <a href="https://table.media/china/en/news/adidas-ceo-admits-mistakes/">China.Table: Rorsted quote</a> · <a href="https://athleticinterest.substack.com/p/how-adidas-lost-china">Athletic Interest: How Adidas lost China</a> · <a href="https://report.adidas-group.com/2025/en/group-management-report-financial-review/business-performance-by-segment/greater-china.html">Adidas AR 2025 (GC segment)</a> · <a href="https://finance.sina.com.cn/wm/2025-03-09/doc-inenzpns0874779.shtml">新浪: 阿迪缓过来了</a> · <a href="https://www.brandstar.com.cn/in-depth/7380">品牌星球</a> · <a href="https://m.jiemian.com/article/12441934.html">界面: 除了Samba</a></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>The 2022 inventory crisis split the market into a barbell — and the middle never came back</summary>
+    <div class="body">
+      <p><b class="tag-fact">FACT</b> 2022 was industry-wide and measurable: gross margins fell at all four domestic majors (Anta −1.4pp, Li-Ning −4.6pp — the worst); inventory days rose across the board (Anta 127→138, Li-Ning 54→58). Nike and Adidas cleared through outlets and livestream discounting.</p>
+      <p><b class="tag-ana">ANALYST VIEW</b> 妙投's framing: "the industry's fate line is the inventory cycle" (运动鞋服行业的命门即库存周期) — DTC and supply-chain digitization exist to manage it, full stop. Channel structure decided who bled: Anta's direct control let it discount surgically; Li-Ning's wholesale rails dumped stock and wrecked price integrity; Nike/Adidas bled brand equity because their prices were built on scarcity.</p>
+      <p><b class="tag-fact">FACT</b> Demand then split, it didn't just shrink: high-performance outdoor grew ¥53.9B (2019) → ¥102.7B (2024, 13.8% CAGR) — Arc'teryx +86%, Salomon +73%, HOKA/On +50%+ online — <em>at the same time as</em> 性价比 value consumption boomed. The squeezed middle is precisely where big-logo Nike lifestyle product and mainline Li-Ning were positioned; Li-Ning raised prices <em>into</em> the collapsing middle, on wholesale rails. That — not the 逐梦行 jacket — is why guochao "didn't save" it.</p>
+      <div class="srcs">Sources: <a href="https://k.sina.cn/article_7880068201_1d5b04c6901901y2r6.html">新京报 via 新浪 (margins/inventory table)</a> · <a href="https://pro.huxiu.com/article/1178577.html">妙投</a> · <a href="https://www.sohu.com/a/976575771_99921395">户外行业报告</a> · <a href="https://news.qq.com/rain/a/20241231A06W4F00">腾讯: 2024大复盘</a></div>
+    </div>
+  </details>
+</section>
+
+<!-- ================= SOURCES ================= -->
+<section id="sources">
+  <div class="snum">07 · Vet before you quote</div>
+  <h2>Source index</h2>
+  <p class="lede">Primary filings first, then the analyst material behind the interpretive claims. Figures in charts trace to these; anything marked ESTIMATE should be re-verified before appearing in a client-facing document.</p>
+  <div class="grid2">
+    <div class="src-group panel">
+      <h4>Nike (primary)</h4>
+      <ul>
+        <li><a href="https://www.businesswire.com/news/home/20260630156660/en/NIKE-Inc.-Reports-Fiscal-2026-Fourth-Quarter-and-Full-Year-Results">FY26 Q4 &amp; full-year results (Jun 30, 2026)</a></li>
+        <li><a href="https://www.businesswire.com/news/home/20250626256960/en/NIKE-Inc.-Reports-Fiscal-2025-Fourth-Quarter-and-Full-Year-Results">FY25 results</a></li>
+        <li><a href="https://www.sec.gov/Archives/edgar/data/320187/000032018725000047/R75.htm">10-K FY25 — GC wholesale vs Direct disaggregation</a></li>
+        <li><a href="https://www.sec.gov/Archives/edgar/data/320187/000032018721000028/R83.htm">10-K FY21 — GC channel split FY19–21</a></li>
+        <li><a href="https://www.fool.com/earnings/call-transcripts/2026/04/01/nike-nke-q3-2026-earnings-call-transcript/">Q3 FY26 earnings call transcript</a></li>
+      </ul>
+    </div>
+    <div class="src-group panel">
+      <h4>Adidas (primary)</h4>
+      <ul>
+        <li><a href="https://report.adidas-group.com/2025/en/group-management-report-financial-review/business-performance-by-segment/greater-china.html">AR 2025 — Greater China segment</a></li>
+        <li><a href="https://report.adidas-group.com/2022/en/group-management-report-financial-review/business-performance-by-segment/greater-china.html">AR 2022 — the −36% year</a></li>
+        <li><a href="https://www.adidas-group.com/en/media/press-releases/adidas-presents-growth-strategy-own-the-game-until-2025">"Own the Game" strategy (2021, later abandoned)</a></li>
+      </ul>
+    </div>
+    <div class="src-group panel">
+      <h4>Anta &amp; Li-Ning (primary)</h4>
+      <ul>
+        <li><a href="https://ir.anta.com/en/news_detail.php?id=160710">Anta FY2025 results (IR)</a></li>
+        <li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2020/0825/2020082500413.pdf">Anta DTC transformation announcement (HKEX, Aug 2020)</a></li>
+        <li><a href="https://doc.irasia.com/listco/hk/lining/announcement/a332504-ew_02331ann_19032026.pdf">Li-Ning FY2025 results announcement</a></li>
+        <li><a href="https://doc.irasia.com/listco/hk/lining/announcement/a279332-e02331.pdf">Li-Ning FY2022 (channel split source)</a></li>
+      </ul>
+    </div>
+    <div class="src-group panel">
+      <h4>Partners / channel structure</h4>
+      <ul>
+        <li><a href="https://www.hkexnews.hk/listedco/listconews/sehk/2026/0527/2026052701005.pdf">Topsports FY26 results (HKEX)</a></li>
+        <li><a href="https://www.topsports.com.cn/media/hk-news/20260625/assets/12214722-0.pdf">Topsports clarification on Nike online sales (Jun 2026)</a></li>
+        <li><a href="https://investor.yueyuen.com/YY_2025_Annual_EN.pdf">Yue Yuen / Pou Sheng Annual Report 2025</a></li>
+        <li>长江证券《滔滔逐潮往，搏浪奋辑行》滔搏首次覆盖, 2024-05-21 (PDF, user-provided)</li>
+        <li><a href="https://frontofficesports.com/why-nikes-rumored-china-e-commerce-gamble-could-be-a-misstep/">Front Office Sports — 2027 online-wholesale cutoff + BNP view</a></li>
+      </ul>
+    </div>
+    <div class="src-group panel">
+      <h4>Analyst / interpretive (Chinese)</h4>
+      <ul>
+        <li><a href="https://www.jiemian.com/article/11859122.html">界面新闻 — "DTC不是原罪，产品失去创新才是根本"</a></li>
+        <li><a href="https://pro.huxiu.com/article/1178577.html">妙投/虎嗅 — 安踏7千字解析 (inventory-cycle thesis)</a></li>
+        <li><a href="https://www.yilantop.com/article/19988">壹览商业 — 国潮涨价的债</a></li>
+        <li><a href="http://www.paicaijing314.com/news/1360411.html">派财经 — Li-Ning channel chaos</a></li>
+        <li><a href="https://pdf.dfcfw.com/pdf/H3_AP202503051644083310_1.pdf">华福证券 — 复盘Nike DTC</a></li>
+        <li><a href="https://www.cbndata.com/information/247644">CBNData — 得物 resale bubble</a></li>
+      </ul>
+    </div>
+    <div class="src-group panel">
+      <h4>Analyst / interpretive (English)</h4>
+      <ul>
+        <li><a href="https://thechinaproject.com/2022/08/19/nike-and-adidas-are-blaming-covid-for-low-china-sales-but-the-numbers-dont-add-up/">The China Project — the COVID excuse, quantified</a></li>
+        <li><a href="https://athleticinterest.substack.com/p/how-adidas-lost-china">Athletic Interest — How Adidas lost China</a></li>
+        <li><a href="https://table.media/china/en/news/adidas-ceo-admits-mistakes/">China.Table — Rorsted admission</a></li>
+        <li><a href="https://kr-asia.com/anta-holds-china-lead-over-nike-but-global-ambitions-leave-investors-wary">KrASIA — Anta passes Nike China</a></li>
+        <li><a href="https://www.chinadailyhk.com/hk/article/608486">Euromonitor 2024 shares via China Daily HK</a></li>
+        <li><a href="https://wwd.com/footwear-news/shoe-industry-news/nike-bnp-analyst-plan-distribution-change-china-business-1239025959/">WWD — BNP on Nike China distribution</a></li>
+      </ul>
+    </div>
+    <div class="src-group panel">
+      <h4>Currency conversion</h4>
+      <ul>
+        <li><a href="https://www.irs.gov/individuals/international-taxpayers/yearly-average-currency-exchange-rates">IRS yearly average currency exchange rates</a> (used for 2021–2025 USD/CNY and EUR/USD)</li>
+        <li>2019–2020 USD/CNY and EUR/USD: ECB/PBOC reference annual averages</li>
+        <li>Nike figures are native USD and require no conversion</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><b>Prepared by IDEO Shanghai Studio</b> · Wai Tong &amp; Chuli Duan · Data as of July 3, 2026.</div>
+  <div style="margin-top:6px;">Caveats: Nike figures are fiscal years ending May (a ~7-month lead vs calendar-year peers) and are native USD. Adidas (EUR) and Anta/Li-Ning (RMB) are converted to USD using IRS/ECB annual-average exchange rates — original-currency figures are shown in every chart tooltip and channel-mix caption; quote whichever currency fits the audience. Anta Group excludes Amer Sports (Arc'teryx/Salomon), which is separately listed and not consolidated. Items tagged ESTIMATE or ANALYST VIEW are not company-reported facts.</div>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+const YEARS = ["2019","2020","2021","2022","2023","2024","2025","2026*"];
+
+// US$ bn (Nike native; others converted at annual-average FX); native-currency values kept for tooltips
+const REV = {
+  nike:   {usd:[6.21,6.68,8.29,7.55,7.25,7.55,6.59,5.85], nat:["FY19 (+21%)","FY20 (+8%)","FY21 (+24%)","FY22 (−9%)","FY23 (−4%)","FY24 (+4%)","FY25 (−13%)","FY26 (−11%)"]},
+  adidas: {usd:[null,4.96,5.44,3.35,3.45,3.74,4.09,null], nat:["segment not reported pre-2020","€4.34B 2020 (−15% c.n.)","€4.60B 2021 (+3% c.n.)","€3.18B 2022 (−36% c.n.)","€3.19B 2023 (+8% c.n.)","€3.46B 2024 (+10% c.n.)","€3.62B 2025 (+13% c.n.)",""]},
+  antaG:  {usd:[4.91,5.15,7.65,7.97,8.81,9.85,11.25,null], nat:["¥33.9B (+41%)","¥35.5B (+5%)","¥49.3B (+39%)","¥53.7B (+9%)","¥62.4B (+16%)","¥70.8B (+14%)","¥80.2B (+13%)",""]},
+  antaB:  {usd:[2.53,2.28,3.72,4.12,4.28,4.66,4.88,null], nat:["¥17.5B","¥15.7B","¥24.0B","¥27.7B","¥30.3B","¥33.5B","¥34.8B (+3.7%)",""]},
+  lining: {usd:[2.01,2.10,3.50,3.83,3.90,3.99,4.15,null], nat:["¥13.9B (+32%)","¥14.5B (+4%)","¥22.6B (+56%)","¥25.8B (+14%)","¥27.6B (+7%)","¥28.7B (+3.9%)","¥29.6B (+3.2%)",""]}
+};
+
+const EVENTS = [
+  {yr:1, label:"2020 · Anta buys back its channel", title:"Aug 2020 — Anta's DTC transformation",
+   fact:"Anta terminates 11 regional distributors covering ~3,500 stores (~35% of its fleet); ~60% converted to direct operation, cost ≈¥2.0B (mostly inventory buyback). Anta-brand gross margin rises from ~41% (2019) to ~52% (2021).",
+   ana:"Broker research (光大证券) framed it at the time as an inventory-control machine — demand-feedback speed, replenishment, price integrity — modeled on FILA's 2009–12 full-direct conversion (inventory days 180→90). This is the single structural move that most separates Anta's next five years from Li-Ning's.",
+   srcs:[["Anta HKEX announcement","https://www1.hkexnews.hk/listedco/listconews/sehk/2020/0825/2020082500413.pdf"],["光大证券研报","https://img3.gelonghui.com/pdf/3a413-87aab799-8d39-44f2-b2e8-c931f0c0dac5.pdf"],["Futu margin analysis","https://news.futunn.com/en/post/59589010/weekend-reading-anta-s-high-margin-strategy-unreplicable-by-other"]]},
+  {yr:2, label:"2021 · Xinjiang cotton + twin peaks", title:"Mar 2021 — the trigger (not the cause)",
+   fact:"Nike GC peaks at $8.29B (FY21, +24%); Li-Ning rides guochao to +56%. The Xinjiang cotton boycott hits foreign brands from March 2021 — Nike GC growth stops in that exact quarter.",
+   ana:"Boycott-only explanations fail the duration test: Nike logged 7–8 consecutive down quarters years later, and domestic brands grew straight through the same COVID lockdowns (The China Project, quantified). The deeper mechanisms — classic-franchise oversupply, the 得物 resale bubble, partner-economics damage — were already loaded; March 2021 lit the fuse.",
+   srcs:[["Nike FY21 results","https://investors.nike.com/investors/news-events-and-reports/investor-news/investor-news-details/2021/NIKE-Inc.-Reports-Fiscal-2021-Fourth-Quarter-and-Full-Year-Results/default.aspx"],["The China Project","https://thechinaproject.com/2022/08/19/nike-and-adidas-are-blaming-covid-for-low-china-sales-but-the-numbers-dont-add-up/"],["虎嗅","https://www.huxiu.com/article/4864825.html"]]},
+  {yr:3, label:"2022 · The great inventory crisis", title:"2022 — the year the market split",
+   fact:"Adidas GC collapses −36% c.n. (Rorsted: \"We don't understand consumers well enough\"); Yeezy terminated. Nike GC −9% (to $7.55B). Li-Ning grows +14% but gross margin −4.6pp — the worst hit of the domestic four; Oct 2022 逐梦行 jacket controversy erases ~HK$20B market cap in days. Anta Group revenue (≈$7.97B / ¥53.7B) passes Nike GC ($7.55B) for the first time.",
+   ana:"Channel structure decided who bled: Anta discounted surgically through direct stores; Li-Ning's wholesale rails dumped stock online and wrecked price integrity; Nike/Adidas cleared through outlets and livestreams, bleeding the scarcity-based brand equity their pricing relied on. Demand split into a barbell — premium outdoor + 性价比 value — and the middle, where big-logo lifestyle product sat, never came back.",
+   srcs:[["Adidas AR 2022","https://report.adidas-group.com/2022/en/group-management-report-financial-review/business-performance-by-segment/greater-china.html"],["China.Table — Rorsted","https://table.media/china/en/news/adidas-ceo-admits-mistakes/"],["新京报 margins table","https://k.sina.cn/article_7880068201_1d5b04c6901901y2r6.html"],["KrASIA — Anta passes Nike","https://kr-asia.com/anta-holds-china-lead-over-nike-but-global-ambitions-leave-investors-wary"]]},
+  {yr:4, label:"2023 · Gulden resets Adidas", title:"2023 — Adidas cleans house; Nike re-embraces retailers",
+   fact:"Gulden slashes channel inventory before rebuilding; Samba sales grow >20× in the year; China P&L and product move under Adrian Siu's local team (idea-to-shelf 45 days vs 9-month global review). Nike, to clear its own glut, rebuilds ties with Foot Locker/DSW/Macy's in the US.",
+   ana:"The DTC-maximalist era ends on both continents. Changjiang Securities: Adidas's CEO calls 35–40% DTC \"the right level\" for retailer relationships. Adidas's recovery is guochao-style localization executed with foreign-brand discipline — the uncomfortable mirror image of Li-Ning's stall.",
+   srcs:[["新浪 — 阿迪缓过来了","https://finance.sina.com.cn/wm/2025-03-09/doc-inenzpns0874779.shtml"],["品牌星球","https://www.brandstar.com.cn/in-depth/7380"],["长江证券滔搏深度 (user PDF)","#sources"]]},
+  {yr:5, label:"2024 · Hill takes over Nike", title:"Oct 2024 — leadership reset; Anta becomes #1 by share",
+   fact:"Elliott Hill (32-year veteran) replaces Donahoe; the stock jumps ~10% on the announcement. Euromonitor 2024: Anta Group 23% company share vs Nike Inc 20.7% — Anta confirmed #1. Li-Ning closes 201 direct-retail stores while re-opening wholesale doors.",
+   ana:"The market read Hill's appointment as a repudiation of Consumer Direct Acceleration. His China diagnosis, in his own words: \"We have become a casual lifestyle brand competing on price in China.\" The fix — rebuild wholesale trust, pull inventory, localize product — reads like Gulden's 2023 playbook with a two-year lag.",
+   srcs:[["Retail Dive — Hill","https://www.retaildive.com/news/nike-names-ceo-elliott-hill-john-donahoe-retires/727588/"],["Euromonitor via China Daily HK","https://www.chinadailyhk.com/hk/article/608486"],["新浪科技 — Hill quote","https://finance.sina.com.cn/tech/roll/2026-07-01/doc-inifinus2895584.shtml"]]},
+  {yr:6, label:"2025 · Divergence complete", title:"2025 — outdoor carries Anta; Adidas mints margin; Nike still falling",
+   fact:"Anta Group ≈$11.25B / ¥80.2B (+13.3%) but main brand only +3.7% — 'other brands' (Descente, Kolon) +59.2% carry the growth; inventory days hit 137. Adidas GC +13% c.n. with a 26.3% operating margin, its best region globally. Li-Ning +3.2%. Nike GC revenue −13% (FY25) then −11% (FY26, to $5.85B) — but full-year GC operating income fell 20% (to $1.28B); the one bright spot was a Q3 FY26 EBIT bounce of +11% as Hill pulled back shipments and discounting.",
+   ana:"Every 2025 storyline is a channel/portfolio story: 'Anta rising' now means its outdoor portfolio rising; Adidas's margin comes from full-price discipline on partner rails; Nike is deliberately shrinking sell-in (units −20%+) to reset price integrity — the same medicine Anta administered to itself in 2020, taken five years late. The full-year numbers show that reset still costs profit before it pays off.",
+   srcs:[["Anta FY2025 (IR)","https://ir.anta.com/en/news_detail.php?id=160710"],["Adidas AR 2025","https://report.adidas-group.com/2025/en/group-management-report-financial-review/business-performance-by-segment/greater-china.html"],["Nike FY26 results","https://www.businesswire.com/news/home/20260630156660/en/NIKE-Inc.-Reports-Fiscal-2026-Fourth-Quarter-and-Full-Year-Results"],["虎嗅 2025年报解读","https://www.huxiu.com/article/4846083.html"]]}
+];
+
+const eventLine = {
+  id:"eventLine",
+  afterDraw(chart){
+    const active = document.querySelector("#eventChips .chip.on");
+    if(!active) return;
+    const idx = +active.dataset.yr;
+    const x = chart.scales.x.getPixelForValue(idx);
+    const {top,bottom} = chart.chartArea;
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.strokeStyle = "rgba(22,22,26,.55)";
+    ctx.setLineDash([5,4]);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(x,top); ctx.lineTo(x,bottom); ctx.stroke();
+    ctx.restore();
+  }
+};
+
+function ds(label,data,color,extra){ return Object.assign({label, data, borderColor:color, backgroundColor:color, borderWidth:2.5, pointRadius:3, pointHoverRadius:5, tension:.25, spanGaps:true}, extra||{}); }
+
+const groupSets = [
+  ds("Nike Greater China (FY)", REV.nike.usd, "#16161a"),
+  ds("Adidas Greater China", REV.adidas.usd, "#1a56db"),
+  ds("Anta Group", REV.antaG.usd, "#c81e1e"),
+  ds("Li-Ning", REV.lining.usd, "#d97706")
+];
+const brandSets = [
+  ds("Nike Greater China (FY)", REV.nike.usd, "#16161a"),
+  ds("Adidas Greater China", REV.adidas.usd, "#1a56db"),
+  ds("Anta Group", REV.antaG.usd, "#c81e1e"),
+  ds("Anta main brand", REV.antaB.usd, "#e05252", {borderDash:[6,4]}),
+  ds("Li-Ning", REV.lining.usd, "#d97706")
+];
+
+const natLookup = {
+  "Nike Greater China (FY)":REV.nike.nat, "Adidas Greater China":REV.adidas.nat,
+  "Anta Group":REV.antaG.nat, "Anta main brand":REV.antaB.nat, "Li-Ning":REV.lining.nat
+};
+
+const revChart = new Chart(document.getElementById("revChart"), {
+  type:"line",
+  data:{labels:YEARS, datasets:groupSets},
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:"nearest", intersect:false},
+    plugins:{
+      legend:{position:"bottom", labels:{usePointStyle:true, boxWidth:8, font:{size:12}}},
+      tooltip:{callbacks:{
+        label:(c)=>{
+          const nat = natLookup[c.dataset.label];
+          const n = nat && nat[c.dataIndex] ? " — " + nat[c.dataIndex] : "";
+          return c.dataset.label + ": $" + c.parsed.y.toFixed(2) + "B" + n;
+        }
+      }}
+    },
+    scales:{
+      y:{title:{display:true, text:"China revenue, US$ billions"}, grid:{color:"#eeeeea"}},
+      x:{grid:{display:false}}
+    }
+  },
+  plugins:[eventLine]
+});
+
+document.querySelectorAll("#revToggle button").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll("#revToggle button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    revChart.data.datasets = (b.dataset.view==="group") ? groupSets : brandSets;
+    revChart.update();
+  });
+});
+
+const chipsEl = document.getElementById("eventChips");
+const detailEl = document.getElementById("eventDetail");
+EVENTS.forEach((e,i)=>{
+  const c = document.createElement("button");
+  c.className="chip"; c.dataset.yr=e.yr; c.textContent=e.label;
+  c.addEventListener("click", ()=>{
+    const wasOn = c.classList.contains("on");
+    document.querySelectorAll("#eventChips .chip").forEach(x=>x.classList.remove("on"));
+    if(wasOn){ detailEl.classList.remove("show"); revChart.update(); return; }
+    c.classList.add("on");
+    detailEl.innerHTML = "<h4>"+e.title+"</h4>"
+      + "<div class='row'><b class='tag tag-fact'>Fact</b> "+e.fact+"</div>"
+      + "<div class='row'><b class='tag tag-ana'>Analyst view</b> "+e.ana+"</div>"
+      + "<div class='srcs'>Sources: "+e.srcs.map(s=>"<a href='"+s[1]+"' target='_blank'>"+s[0]+"</a>").join(" · ")+"</div>";
+    detailEl.classList.add("show");
+    revChart.update();
+  });
+  chipsEl.appendChild(c);
+});
+
+// ---------- store chart ----------
+const STORE_YEARS = ["2019","2020","2021","2022","2023","2024","2025"];
+new Chart(document.getElementById("storeChart"), {
+  type:"line",
+  data:{labels:STORE_YEARS, datasets:[
+    ds("Anta brand stores (incl. Kids)", [10516,9922,9403,9603,9831,9919,9855], "#c81e1e"),
+    ds("Li-Ning total POS", [7550,6933,7137,7603,7668,7585,7609], "#d97706"),
+    ds("Topsports directly-operated (Nike/Adidas partner)", [8343,8395,8006,7695,6565,6144,5020], "#16161a"),
+    ds("Pou Sheng directly-operated (Nike/Adidas partner)", [5883,5240,4631,4093,3523,3448,3310], "#6b7280"),
+    ds("FILA", [1951,2006,2054,1984,1972,2060,2040], "#7e3af2"),
+    ds("Adidas total doors incl. franchise (anchors only)", [12000,null,null,null,null,7500,null], "#1a56db", {borderDash:[3,4], pointStyle:"rectRot", pointRadius:6})
+  ]},
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    interaction:{mode:"nearest", intersect:false},
+    plugins:{legend:{position:"bottom", labels:{usePointStyle:true, boxWidth:8, font:{size:11.5}}}},
+    scales:{y:{title:{display:true,text:"Stores (see legend — series count different things)"}, grid:{color:"#eeeeea"}}, x:{grid:{display:false}}}
+  }
+});
+
+// ---------- DTC share chart ----------
+new Chart(document.getElementById("dtcChart"), {
+  type:"line",
+  data:{labels:["FY19","FY20","FY21","FY22","FY23","FY24","FY25"], datasets:[
+    ds("NIKE Direct % of Greater China revenue", [40.0,43.1,45.6,45.9,46.7,43.5,43.8], "#16161a", {fill:true, backgroundColor:"rgba(22,22,26,.06)"})
+  ]},
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:(c)=>"NIKE Direct: "+c.parsed.y+"% (10-K, reported)"}}},
+    scales:{y:{min:35, max:50, ticks:{callback:v=>v+"%"}, grid:{color:"#eeeeea"}}, x:{grid:{display:false}}}
+  }
+});
+</script>
+</body>
+</html>
